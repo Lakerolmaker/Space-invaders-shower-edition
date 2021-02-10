@@ -1,0 +1,1940 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+
+    <title>
+        Dusch annnihilater 
+    </title>
+
+    <meta charset="utf-8">
+
+    <!-- Laddar in css-filen -->
+    <link href="style.css" rel="stylesheet" type="text/css">
+
+    <!-- Laddar in javascipt-filen -->
+    <script src="Script/Functions.js"></script>
+
+    <!-- Laddar in J-query-filen -->
+    <script src="Script/jquery-2.2.1.min.js"></script>
+
+
+</head>
+<!-- Laddar in alla bilder -->
+<img id="soap" src="Bilder/soap.png" style="display: none">
+<img id="DirtyBackteria" src="../Duscha/Bilder/Backteria%20smutsig.png" style="display: none">
+<img id="soapbuble" src="Bilder/soapbuble.png" style="display: none">
+<img id="cleanBakteria" src="Bilder/bakteria.png" style="display: none">
+<img id="redBakteria" src="Bilder/BackteriaRed.png" style="display: none">
+<img id="blueBakteria" src="Bilder/BackteriaBlue.png.png" style="display: none">
+<img id="blackBakteria" src="Bilder/Backteria%20smutsig%20svart.png" style="display: none">
+<img id="black-powerup" src="Bilder/powerup%20black.png" style="display: none">
+<img id="red-powerup" src="Bilder//powerup%20red.png" style="display: none">
+<img id="blue-powerup" src="Bilder/poweup%20blue.png" style="display: none">
+<img id="HotbarBackground" src="Bilder/hotbar.png" style="display: none">
+<img id="MenyBackground" src="Bilder/underwater.jpg" style="display: none">
+<img id="Preview1" src="Bilder/preview.png" style="display: none">
+<img id="spaceBar" src="Bilder/spacebar.png" style="display: none">
+<img id="AKey" src="Bilder/A%20key.png" style="display: none">
+<img id="DKey" src="Bilder/D%20Key.png" style="display: none">
+<img id="EscKey" src="Bilder/Esc_key.png" style="display: none">
+<img id="setup1" src="Bilder/setup1.png" style="display: none">
+<img id="setup2" src="Bilder/setup2.png" style="display: none">
+<img id="Mute" src="Bilder/Mute.png" style="display: none">
+<img id="Unmute" src="Bilder/UNMUTE.png" style="display: none">
+
+
+
+
+
+<body onkeydown="keyDown(event)" onkeyup="keyUp(event)">
+
+    <canvas id="myCanvas" width="800" height="700" style="position: absolute; left 0px; right 0px; border:3px solid blue" z-index; 1>>
+
+
+
+        <!-- Laddar in videor -->
+        <video id="video1" loop autoplay style="display: none">
+            <source src="Bilder/under%20water.mp4" type='video/mp4'> Your browser does not support the video tag.
+        </video>
+
+
+        <video id="video2" loop autoplay style="display: none">
+            <source src="Bilder/contamintedWater.mp4" type='video/mp4'> Your browser does not support the video tag.
+        </video>
+
+        <video id="video3" style="display: none">
+            <source src="Bilder/link%20start%20complete.mp4" type='video/mp4'> Your browser does not support the video tag.
+        </video>
+
+        <video id="video4" loop autoplay style="display: none">
+            <source src="Bilder/startscreen.mp4" type='video/mp4'> Your browser does not support the video tag.
+        </video>
+
+        <video id="video5" loop autoplay style="display: none">
+            <source src="Bilder/earth_water.mp4" type='video/mp4'> Your browser does not support the video tag.
+        </video>
+
+        <script>
+            //: Skapr variabler för canvas
+            var c = document.getElementById("myCanvas");
+            var ctx = c.getContext("2d");
+
+            //: Skapr variabler för bilberna.
+            var soapImg = document.getElementById("soap");
+            HotbarBakckgroundImg = document.getElementById("HotbarBackground"),
+                dirtyBakteriaImg = document.getElementById("DirtyBackteria"),
+                cleanBakteriaImg = document.getElementById("cleanBakteria"),
+                soapbubleImg = document.getElementById("soapbuble"),
+                redBakteriaImg = document.getElementById("redBakteria"),
+                blueBakteriaImg = document.getElementById("blueBakteria"),
+                blackBakteriaImg = document.getElementById("blackBakteria"),
+                MenyBackgroundImg = document.getElementById("MenyBackground"),
+                spaceBarImg = document.getElementById("spaceBar"),
+                AKeyImg = document.getElementById("AKey"),
+                DKeyImg = document.getElementById("DKey"),
+                EscKeyImg = document.getElementById("EscKey"),
+                muteImg = document.getElementById("Mute"),
+                unMuteImg = document.getElementById("Unmute"),
+                setup1Img = document.getElementById("setup1"),
+                setup2Img = document.getElementById("setup2");
+
+            //: Bilderna för powerup-sen
+            var redPowerupaImg = document.getElementById("red-powerup")
+            var blackPowerupImg = document.getElementById("black-powerup")
+            var bluePowerupImg = document.getElementById("blue-powerup")
+
+
+            //: laddar in musik effekter.
+            var laserSound = new Audio('fx/Sound Effect. Laser Cannon Charging and Firing.mp3')
+            var BackgroundMusic = new Audio("fx/4 HOURS Wonderfull Chill out Music.mp3")
+            var MenyMusic = new Audio("fx/Last Dawn.mp3")
+            var loseMuscic = new Audio("fx/bensound-sadday.mp3")
+
+
+            //: Gör om videon tillen variebel.
+            var video = document.getElementById("video1")
+            var video2 = document.getElementById("video2")
+            var video3 = document.getElementById("video3")
+            var video4 = document.getElementById("video4")
+            var video5 = document.getElementById("video5")
+
+
+            //:  uppdaterar functionen som uppdaterar  spelet
+            window.setInterval(update, 1)
+
+            // functionen som skapar en bakteria.
+            function Backteria(name, x, y, vy, vx, backteriaOffsetX, backteriaOffsetY) {
+
+                this.name = name;
+                this.x = x;
+                this.vx = vx;
+                this.y = y;
+                this.vy = vy;
+                this.backteriaOffsetX = backteriaOffsetX;
+                this.backteriaOffsetY = backteriaOffsetY;
+
+
+
+            }
+
+            //: Skapar nya bublor som används för att tvätta bakterierna.
+            function Buble(name, x, y, vy, vx, damage) {
+
+                this.name = name;
+                this.x = x;
+                this.vx = vx;
+                this.y = y;
+                this.vy = vy;
+                this.damage = damage;
+
+            }
+
+            //: en function som skapar nya powerups  
+            function Powerup(name, x, y, vy) {
+
+                this.name = name;
+                this.x = x;
+                this.y = y;
+                this.vy = vy;
+            }
+
+            //: en function som skapar en laser  
+            function Laser(name, x, y, heigt, width, laserOffset, circleX) {
+
+                this.name = name;
+                this.x = x;
+                this.y = y;
+                this.heigt = heigt;
+                this.width = width;
+                this.laserOffset = laserOffset;
+                this.circleX = circleX;
+
+            }
+
+            function soap(x, y, vy, vx, img) {
+                this.img = soapImg;
+                this.x = x;
+                this.y = y;
+                this.vy = vy;
+                this.vx = vx;
+            }
+
+            //: skapar en powerup effekt när man dödar ett power monster.
+            function powerUp(x, y, name) {
+                //: lägger in all värden i powerup arrayn.
+                powerUps.push(new Powerup(name, x, y, 0.3))
+
+            }
+
+
+            //: Skapar alla arays så att alla obejt har en plats.
+            //: Array för bakterierna
+            var atackers = []
+                //: Array för bublorna samt laserar.
+            var projectiles = []
+                //: En array för temporär information,
+            var temp = []
+                //: En array för alla powerups 
+            var powerUps = []
+                //: En array för tvålen
+            var soapArray = []
+
+
+            //: skapar en ny tvål närspelet startar.
+            soapArray.push(new soap(350, 500, 0, 0, soapImg))
+
+
+            //: definerar om en powerup har aktiverats , samt vilken
+            var powerActive = "regular";
+
+            //:  uppdaterar spelet
+            function update() {
+
+
+                //: Den ingående klockan i spelet.
+                heartbeat();
+
+                //: Tar bort den gamla positionen av alla objekt.
+                ctx.clearRect(0, 0, 800, 700)
+
+                //: Ritar ut allting på skärmen .
+                DrawImg()
+
+                //: Skapr nya bakterier 
+                if (startmotion == 1) {
+                    Spawn()
+                }
+
+                //: Bytter bakgrunden på canvaset.
+                backgroundChanger()
+
+                //: kollar om en bakterie har blibit träffad.
+                collision()
+
+                //: Uppdaterar poeng räkninen.
+                pointAdder(0)
+
+                //: Kollar om användändaren vill stänga av ljudet.
+                muteChecker()
+
+            }
+
+            function muteChecker() {
+                //: Stänger av ljudet om man trycker ner mute knappen eller "M" knappen.
+                if ((mute == 1) && (lock == 0)) {
+
+                    if ((startmotion == 1) || (startmotion == 0) || (startmotion == 0)) {
+
+                        togglePause(BackgroundMusic)
+                    }
+
+                    if ((startmotion == 2) || (startmotion == 5)) {
+
+                        togglePause(MenyMusic)
+                    }
+
+                    lock = 1
+                }
+
+                //: startar av ljudet om man trycker ner mute knappen eller "M" knappen.
+                if ((mute == 0) && (lock == 1)) {
+
+                    if ((startmotion == 1) || (startmotion == 0)) {
+
+                        togglePause(BackgroundMusic)
+                    }
+
+                    if ((startmotion == 2)) {
+
+                        togglePause(MenyMusic)
+                    }
+
+                    lock = 0
+                }
+
+            }
+
+            function togglePause(Audio) {
+                if ((Audio.paused && Audio.currentTime > -1) && (!Audio.ended)) {
+                    Audio.play();
+                } else {
+                    Audio.pause();
+                }
+            }
+
+
+            //: skapr namn för alla bakterier så att de blir identifierbara.
+            var names = 0,
+                mute = 0,
+                arcRadius = 0,
+                lock = 0,
+                spawnLimit = undefined,
+
+                //: Startmotion är en variabel som i vilket stadie som spelat är i.
+                startmotion = 3;
+
+            //: Skapar nya bakterier.
+            function Spawn() {
+
+                if (map == 1) {
+                    spawnLimit = 20
+                } else if (map == 2) {
+
+                    spawnLimit = 30
+                }
+
+                if ((names !== spawnLimit) && (miliseconds == 0)) {
+
+
+                    //: lägger till ett på namnet , så att alla bakterier får olika namn.
+                    names = names + 1
+                        //: skapr en ny bakterie och läger in den i en array, så att den är lätt tillgänglig
+                    atackers.push(new Backteria(names, 0, 10, 0, 0.3, (25 / 243), (30 / 200)))
+
+
+
+
+                }
+            }
+
+            //: Sparar hur långt bakteriern har kommit i sin resa neråt.
+            var movement = 0,
+                position = 0,
+                maxY = 0;
+
+            //: En variabel som bestämmer vilken färg som hotbaren ska ha.
+            var activeColor = ""
+
+            //: En variabel som bestämmer mängden oppacity
+            var alpha = 0,
+                alpha1 = 0,
+                alpha2 = 0,
+                alpha3 = 0,
+                alpha4 = 0,
+                menycolor = 0,
+                setupColor = 0,
+                map = 1,
+                timeAnnimations = undefined,
+                //: En variebel som stänger av ett if stament
+                ifShutdown = 0,
+                rectX = 400,
+                rectY = 400,
+                rectWidth = 0,
+                rectHeight = 0,
+                fateMeny = 0,
+                descriptionSetting = 0,
+                fateMenyStoper = 0,
+                instructionsSlide = 1,
+                playvideo = false;
+
+
+            //: Ritar ut allting
+            function DrawImg() {
+
+                //: Inställningar
+                if (startmotion == 6) {
+
+
+                    if (setupColor == 1) {
+                        roundRect(ctx, 35, 30, 200, 200, 25, true, true, 54, 219, 213, 0.4)
+                    } else {
+                        roundRect(ctx, 35, 30, 200, 200, 25, true, true, 81, 176, 239, 0.4)
+                    }
+
+                    if (setupColor == 2) {
+
+                        roundRect(ctx, 265, 30, 200, 200, 25, true, true, 54, 219, 213, 0.4)
+                    } else {
+                        roundRect(ctx, 265, 30, 200, 200, 25, true, true, 81, 176, 239, 0.4)
+                    }
+
+                    roundRect(ctx, 35, 500, 570, 170, 25, true, true, 70, 127, 214, 100)
+
+
+                    roundRect(ctx, 620, 500, 70, 70, 10, true)
+                    ctx.fillStyle = "rgba(81, 176,239)"
+                    ctx.font = " bold 35px Bleedfont";
+                    ctx.fillText("Left", 700, 550);
+                    ctx.font = " bold 40px waterfont";
+                    roundRect(ctx, 620, 600, 70, 70, 10, true)
+                    ctx.fillText("Right", 692, 655);
+                    ctx.fillStyle = "rgba(0, 52, 255, 0.92)"
+                    ctx.font = " bold 60px waterfont";
+                    ctx.fillText("A", 630, 553);
+                    ctx.fillText("D", 635, 655);
+
+
+                    ctx.drawImage(setup2Img, 45, 40, 180, 180)
+                    ctx.drawImage(setup1Img, 275, 40, 180, 180)
+
+                    //: Ritar ut "description"
+                    if (descriptionSetting == 1) {
+
+
+
+
+                    } else if (descriptionSetting == 2) {
+
+
+
+                    }
+
+
+
+                }
+
+                //: Intruktionerna
+                if (startmotion == 5) {
+
+                    //: Skapar bakgrunden
+                    //: Bakgrunden till preview filmerna
+                    roundRect(ctx, 35, 30, 500, 500, 25, true, true, 81, 176, 239, 0.4)
+                        //:Bakgrunden till texten
+                    roundRect(ctx, 565, 30, 200, 500, 25, true, true, 70, 127, 214, 100)
+                        //: Bakgrunden kvadraten i botten.
+                    roundRect(ctx, 35, 537, 730, 157, 25, true, true, 70, 127, 214, 100)
+
+
+
+
+
+                    if (instructionsSlide == 1) {
+                        //: Lägger in  preview bilden
+
+
+                        ctx.fillStyle = "rgb(70, 235, 158)"
+                        ctx.font = " bold 25pt bleedfont";
+                        ctx.fillText("In this game  ", 570, 100, 200, 100)
+                        ctx.fillText("your goal is  ", 570, 150, 200, 100)
+                        ctx.fillText("to protect the ", 570, 200, 200, 100)
+                        ctx.fillText("water from the ", 570, 250, 200, 100)
+                        ctx.font = " bold 25pt bleedfont";
+                        ctx.fillStyle = "rgb(242, 59, 22)"
+                        ctx.fillText("evi l  ", 570, 300, 85, 50)
+                        ctx.fillStyle = "rgb(22, 242, 51)"
+                        ctx.fillText("Backteria  ", 650, 300, 120, 120)
+
+                    }
+
+                    if (instructionsSlide == 2) {
+
+
+                        ctx.fillStyle = "rgb(70, 235, 158)"
+                        ctx.font = " bold 25pt bleedfont";
+                        ctx.fillText("Move the Soap   ", 570, 100, 200, 100)
+                        ctx.fillText("By pressing   ", 570, 150, 200, 100)
+                        ctx.fillText("The A     ", 570, 200, 200, 100)
+                        ctx.fillText("and D key  ", 570, 250, 200, 100)
+
+
+                        ctx.drawImage(AKeyImg, 590, 270, 50, 50)
+                        ctx.drawImage(DKeyImg, 680, 270, 50, 50)
+
+                    }
+
+
+
+
+                    if (instructionsSlide == 3) {
+
+                        ctx.fillStyle = "rgb(70, 235, 158)"
+                        ctx.font = " bold 25pt bleedfont";
+                        ctx.fillText("Attack the   ", 570, 100, 200, 100)
+                        ctx.fillText("backteriea by   ", 570, 150, 200, 100)
+                        ctx.fillText(" shooting a   ", 570, 200, 200, 100)
+                        ctx.fillText("buble with  ", 570, 250, 200, 100)
+                        ctx.fillText(" spacebar ", 570, 300, 200, 100)
+
+                        ctx.drawImage(spaceBarImg, 570, 350, 190, 40)
+                    }
+
+                    if (instructionsSlide == 4) {
+
+
+                        ctx.fillStyle = "rgb(70, 235, 158)"
+                        ctx.font = " bold 25pt bleedfont";
+                        ctx.fillText("Hit the Backteria   ", 570, 100, 200, 100)
+                        ctx.fillText("with the bubbles   ", 570, 150, 200, 100)
+                        ctx.fillText("to make them   ", 570, 200, 200, 100)
+                        ctx.fillText(" dissapear  ", 570, 250, 200, 100)
+
+                    }
+
+                    if (instructionsSlide == 5) {
+                        //: Lägger in special bakterierna
+                        ctx.drawImage(redBakteriaImg, 110, 100, 150, 150)
+                        ctx.drawImage(blueBakteriaImg, 330, 100, 150, 150)
+                        ctx.drawImage(blackBakteriaImg, 220, 300, 150, 150)
+
+                        //: Lägger in powerup bilderna 
+                        ctx.drawImage(redPowerupaImg, 165, 80, 40, 40)
+                        ctx.drawImage(bluePowerupImg, 386, 80, 40, 40)
+                        ctx.drawImage(blackPowerupImg, 275, 290, 40, 40)
+
+
+
+
+                        ctx.fillStyle = "rgb(70, 235, 158)"
+                        ctx.font = " bold 25pt bleedfont";
+                        ctx.fillText("there are special   ", 570, 100, 200, 100)
+                        ctx.fillText("backteria, that when   ", 570, 150, 200, 100)
+                        ctx.fillText("hit drop    ", 570, 200, 200, 100)
+                        ctx.fillText("powerups  ", 570, 250, 200, 100)
+                        ctx.font = " bold 20pt bleedfont";
+                        ctx.fillText("Press  ", 570, 330, 200, 100)
+                        ctx.fillText("To  exit  ", 590, 390, 200, 100)
+
+                        //: Esc knappen
+                        ctx.drawImage(EscKeyImg, 690, 295, 50, 50)
+
+                    }
+
+
+
+
+
+                    //: Fyrkant 1
+                    roundRect(ctx, 600, 545, 100, 100, 25, true, true, 0, 128, 128, 0.81)
+                    ctx.font = " bold 75pt bleedfont";
+                    ctx.fillStyle = "  rgba(255, 67, 0, 0.81)"
+                    ctx.fillText("D", 615, 633)
+                    ctx.font = " bold 25pt bleedfont";
+                    ctx.fillStyle = "rgb(22, 242, 51)"
+                    ctx.fillText("Next", 600, 685)
+
+
+                    //: Fyrkant 2
+                    roundRect(ctx, 480, 545, 100, 100, 25, true, true, 0, 128, 128, 0.81)
+                    ctx.font = " bold 75pt bleedfont";
+                    ctx.fillStyle = "  rgba(255, 67, 0, 0.81)"
+                    ctx.fillText("A", 490, 633)
+                    ctx.font = " bold 25pt bleedfont";
+                    ctx.fillStyle = "rgb(22, 242, 51)"
+                    ctx.fillText("Back", 480, 685)
+
+
+
+                    //: 1
+                    ctx.beginPath()
+                    ctx.fillStyle = "rgba(13, 119, 101, 0.81)"
+                    if (instructionsSlide == 1) {
+                        ctx.fillStyle = "rgba(71, 231, 234, 0.81)"
+                    }
+                    ctx.font = " bold 50pt numbers";
+                    ctx.fillText("1", 80, 640)
+                    ctx.fill()
+                    ctx.closePath()
+                        //: 2
+                    ctx.beginPath()
+                    ctx.fillStyle = "rgba(13, 119, 101, 0.81)"
+                    if (instructionsSlide == 2) {
+                        ctx.fillStyle = "rgba(71, 231, 234, 0.81)"
+                    }
+                    ctx.font = " bold 50pt numbers";
+                    ctx.fillText("2", 150, 640)
+                    ctx.fill()
+                    ctx.closePath()
+                        //: 3
+                    ctx.beginPath()
+                    ctx.fillStyle = "rgba(13, 119, 101, 0.81)"
+                    if (instructionsSlide == 3) {
+                        ctx.fillStyle = "rgba(71, 231, 234, 0.81)"
+                    }
+                    ctx.font = " bold 50pt numbers";
+                    ctx.fillText("3", 220, 640)
+                    ctx.fill()
+                    ctx.closePath()
+                        //: 4
+                    ctx.beginPath()
+                    ctx.fillStyle = "rgba(13, 119, 101, 0.81)"
+                    if (instructionsSlide == 4) {
+                        ctx.fillStyle = "rgba(71, 231, 234, 0.81)"
+                    }
+                    ctx.font = " bold 50pt numbers";
+                    ctx.fillText("4", 290, 640)
+                    ctx.fill()
+                    ctx.closePath()
+                        //: 5
+                    ctx.beginPath()
+                    ctx.fillStyle = "rgba(13, 119, 101, 0.81)"
+                    if (instructionsSlide == 5) {
+                        ctx.fillStyle = "rgba(71, 231, 234, 0.81)"
+                    }
+                    ctx.font = " bold 50pt numbers";
+                    ctx.fillText("5", 360, 640)
+                    ctx.fill()
+                    ctx.closePath()
+
+
+
+
+
+
+
+
+
+                }
+
+                //: Detta händer om man dör/Vinner 
+                if (startmotion == 4) {
+
+                    if (fateMenyStoper == 0) {
+                        fateMenyStoper = ((hours * 864000) + (minutes * 14400) + (seconds * 240) + miliseconds + 1000)
+                    }
+
+                    //: Om man har vunnit
+                    if (fate == true) {
+                        //: Ritar ut vidieon i backgrunden
+                        ctx.drawImage(video4, 0, 0, 800, 800)
+
+                        fadeOut("victory", 190, 370, 60)
+
+
+                        //: Visar "press eneter to continue"
+                        if ((fateMenyStoper < ((hours * 864000) + (minutes * 14400) + (seconds * 240) + miliseconds)) && (fateMenyStoper > 0)) {
+
+                            fadeOut("press enter to continue", 38, 470, 35)
+                        }
+
+
+                        //: Om man har förlorat
+                    } else {
+
+                        //: Ritar ut vidieon i backgrunden
+                        ctx.drawImage(video5, 0, 0, 800, 800)
+
+
+                        fadeOut("You  Lost", 170, 370, 60, 116, 26, 26)
+
+
+                        //: Visar "press eneter to continue"
+                        if ((fateMenyStoper < ((hours * 864000) + (minutes * 14400) + (seconds * 240) + miliseconds)) && (fateMenyStoper > 0)) {
+
+                            fadeOut("press eneter to continue", 38, 470, 35, 116, 26, 26)
+                        }
+
+
+                    }
+
+
+
+
+                }
+
+                //: Detta är det första som händer i spelet. det är som en pre meny effekt.
+                if (startmotion == 3) {
+
+
+                    //: Start en function som skapar en fade out effekt
+                    fadeOut("Press any key", 95, 350, 47, undefined, undefined, undefined, true)
+
+
+
+                    //: Ritar ut video 3 när playvideo är true
+                    //: keydown funktion kontrolerar det.
+                    if (playvideo == true) {
+
+                        ctx.drawImage(video3, 0, 0, 800, 800)
+                    }
+
+
+                    //: En event listener som kollar om video3 har spelat klart.
+                    document.getElementById('video3').addEventListener('ended', endVideo, false);
+
+                    //: En funktion som startas när video3 är klar.
+                    function endVideo(e) {
+
+                        startmotion = 2;
+
+
+                        MenyMusic.play()
+                    }
+
+                }
+
+                //: Meny Navigationen
+                if (startmotion == 2) {
+
+
+
+
+                    ctx.fillStyle = "rgba(81, 176,239, " + alpha + ")"
+                    ctx.font = " bold 70px waterfont";
+                    ctx.fillText("Dusch annihlilate", 100, 130);
+
+
+
+                    //: Gör så att texten kommer fram i ordning
+                    if (alpha < 1) {
+                        alpha += 0.001
+                    } else {
+
+                        if (menycolor == 1) {
+                            ctx.fillStyle = "#36dbd5"
+                        } else {
+                            ctx.fillStyle = "rgba(81, 176,239, " + alpha1 + ")"
+                        }
+
+                        ctx.font = " bold 100px waterfont";
+                        ctx.fillText("Start", 250, 300);
+
+                        if (alpha1 < 1) {
+                            alpha1 += 0.005
+                        } else {
+
+                            if (menycolor == 2) {
+                                ctx.fillStyle = "#36dbd5"
+                            } else {
+                                ctx.fillStyle = "rgba(81, 176,239, " + alpha2 + ")"
+                            }
+
+                            ctx.font = " bold 70px waterfont";
+                            ctx.fillText("Instuctions", 201, 450);
+
+                            if (alpha2 < 1) {
+                                alpha2 += 0.005
+                            } else {
+
+                                //: Ändrar färgen på intructions om man highlighar den. 
+                                if (menycolor == 3) {
+                                    ctx.fillStyle = "#36dbd5"
+                                } else {
+                                    ctx.fillStyle = "rgba(81, 176,239, " + alpha3 + ")"
+                                }
+
+                                ctx.font = " bold 70px waterfont";
+                                ctx.fillText("Settings", 240, 590);
+
+
+                                if (alpha3 < 1) {
+                                    alpha3 += 0.005
+                                } else {
+
+                                    ctx.fillStyle = "rgba(81, 176,239, " + alpha4 + ")"
+                                    roundRect(ctx, 620, 500, 70, 70, 10, true)
+                                    ctx.fillText("Up", 700, 550);
+                                    ctx.font = " bold 60px waterfont";
+                                    ctx.font = " bold 40px waterfont";
+                                    roundRect(ctx, 620, 600, 70, 70, 10, true)
+                                    ctx.fillText("Down", 692, 655);
+                                    ctx.fillStyle = "rgba(0, 52, 255, " + alpha4 + ")"
+                                    ctx.font = " bold 60px waterfont";
+                                    ctx.fillText("W", 622, 550);
+                                    ctx.fillText("S", 635, 655);
+
+                                    if (alpha4 < 1) {
+                                        alpha4 += 0.001
+                                    }
+
+                                }
+
+
+
+                            }
+
+                        }
+
+
+                    }
+
+
+
+
+                }
+
+                //: Själva spelet
+                if (startmotion == 1 || startmotion == 0) {
+
+
+
+
+                    //: ritar ut vatten effekten i underkanten av kanvaset.
+                    if (fate !== false) {
+                        ctx.drawImage(video, 0, 480, 800, 200)
+                    } else {
+                        ctx.drawImage(video2, 0, 480, 800, 200)
+                    }
+
+
+                    //: Ritar ut alla Bakterier.
+                    for (var i = 0; i < atackers.length; i++) {
+
+                        //: Om man har valt den första mappen.
+                        if (map == 1) {
+
+                            if ((names !== 20) && (startmotion == 1)) {
+
+                                if ((atackers[i].x > 700) && (atackers[i].y < 99)) {
+                                    atackers[i].vx = 0
+                                    atackers[i].vy = 0.4
+                                }
+
+                                if ((atackers[i].y > 70) && (atackers[i].x > 50)) {
+                                    atackers[i].vy = 0
+                                    atackers[i].vx = -0.3
+                                }
+
+                            }
+
+                            //: ställer upp bakterierna i snygga rader när det har skapats 20 bakterier.
+                            if ((names == 20) && (startmotion == 1)) {
+
+                                // stoppar den undre raden när den första bakterien är vid dens specifika lokalition.
+                                if (i <= 9) {
+
+                                    if (atackers[0].x > 51.8) {
+                                        atackers[i].vx = -0.3
+                                            // stoppar alla bakterier från att åka i y-led
+                                            //(förutom nummer 10, efterssom att den inte hade åkt klart)
+                                        if (i != 9) {
+                                            atackers[i].vy = 0
+                                        }
+
+                                    } else {
+                                        atackers[i].vx = 0
+                                    }
+
+                                    // Gör så att nummer 10 åkert klart i y-led
+                                    if ((i == 9) && (atackers[i].y > 70)) {
+
+                                        atackers[i].vy = 0
+
+                                    }
+
+                                }
+
+                                // stoppar den övre raden när den första bakterien är vid dens specifika lokalition.
+                                if (i > 9) {
+                                    if (atackers[10].x < 700) {
+                                        atackers[i].vx = 0.3
+                                        atackers[i].vy = 0
+
+                                    } else {
+                                        atackers[i].vx = 0
+                                        atackers[i].vy = 0
+                                            //: Flyttar den 10 bakterien så att den har samma x värde som den bakterien över sig.
+                                        atackers[9].x = atackers[10].x
+
+
+
+                                    }
+                                }
+
+                                //: kollar om alla bakterier har ställt upp sig i rätt orning.
+                                //: om detta är sant startar spelet.
+                                if ((atackers[0].vx == 0) && (atackers[1].vx == 0) && (atackers[2].vx == 0) && (atackers[3].vx == 0) && (atackers[4].vx == 0) && (atackers[5].vx == 0) && (atackers[6].vx == 0) && (atackers[7].vx == 0) && (atackers[8].vx == 0) && (atackers[9].vx == 0) && (atackers[10].vx == 0) && (atackers[11].vx == 0) && (atackers[12].vx == 0) && (atackers[13].vx == 0) && (atackers[14].vx == 0) && (atackers[15].vx == 0) && (atackers[16].vx == 0) && (atackers[17].vx == 0) && (atackers[18].vx == 0) && (atackers[19].vx == 0) && (startmotion !== 0)) {
+                                    startmotion = 0
+                                }
+
+                            }
+
+                        }
+
+                        if (map == 2) {
+
+
+                            if ((names !== 30) && (startmotion == 1)) {
+
+                                if ((atackers[i].x > 700) && (atackers[i].y < 99)) {
+                                    atackers[i].vx = 0
+                                    atackers[i].vy = 0.4
+                                }
+
+                                if ((atackers[i].y > 70) && (atackers[i].x > 600) && (atackers[i].y < 90)) {
+                                    atackers[i].vy = 0
+                                    atackers[i].vx = -0.3
+                                }
+
+
+                                if ((atackers[i].x < 51.59999999999984) && (atackers[i].y > 70) && (atackers[i].y < 150)) {
+                                    atackers[i].vx = 0
+                                    atackers[i].vy = 0.35
+
+                                }
+
+                                if ((atackers[i].y > 140) && (atackers[i].x < 60)) {
+                                    atackers[i].vy = 0
+                                    atackers[i].vx = 0.3
+                                }
+
+
+
+                            }
+
+
+
+                            //: ställer upp bakterierna i snygga rader när det har skapats 30 bakterier.
+                            if ((names == 30) && (startmotion == 1)) {
+                                // atackers[i].vx = 0
+                                // atackers[i].vy = 0
+
+
+                                //: Kontrolerar den understa raden
+                                if ((i < 10) && (atackers[0].x == atackers[19].x)) {
+                                    atackers[i].vx = 0
+                                }
+
+                                //: Kontrolerar den mittersta raden
+                                if ((i < 20) && (i > 9) && (atackers[10].x == atackers[9].x)) {
+                                    atackers[i].vx = 0
+                                }
+
+                                //: Kontrolerar den översta raden
+                                if ((i > 19) && (atackers[20].x == atackers[19].x)) {
+                                    atackers[i].vx = 0
+                                }
+
+                                //: Ställer de få bakterier som är i oballans i ballans
+                                //: Kontrolerar den 10:de bakterien
+                                if ((i == 9) && (atackers[9].y == atackers[8].y)) {
+                                    atackers[i].vy = 0
+                                }
+                                //: Kontrolerar den 20:de bakterien.
+                                if ((i == 19) && (atackers[19].y == atackers[18].y)) {
+                                    atackers[i].vy = 0
+                                }
+
+
+                                //: kollar om alla bakterier har ställt upp sig i rätt orning.
+                                //: om detta är sant startar spelet.
+                                if ((atackers[0].vx == 0) && (atackers[1].vx == 0) && (atackers[2].vx == 0) && (atackers[3].vx == 0) && (atackers[4].vx == 0) && (atackers[5].vx == 0) && (atackers[6].vx == 0) && (atackers[7].vx == 0) && (atackers[8].vx == 0) && (atackers[9].vx == 0) && (atackers[10].vx == 0) && (atackers[11].vx == 0) &&
+                                    (atackers[12].vx == 0) && (atackers[13].vx == 0) && (atackers[14].vx == 0) && (atackers[15].vx == 0) && (atackers[16].vx == 0) && (atackers[17].vx == 0) && (atackers[18].vx == 0) && (atackers[19].vx == 0) && (atackers[20].vx == 0) && (atackers[21].vx == 0) && (atackers[22].vx == 0) && (atackers[23].vx == 0) && (atackers[24].vx == 0) && (atackers[25].vx == 0) && (atackers[26].vx == 0) && (atackers[27].vx == 0) && (atackers[28].vx == 0) && (atackers[29].vx == 0) &&
+                                    (startmotion !== 0)) {
+                                    startmotion = 0
+                                }
+
+
+
+                            }
+
+
+                        }
+
+
+                        //: startar spelet, 
+                        //: (gör så att bakterierna rör dig neråt i en spiral rörelse.)
+                        if (startmotion == 0) {
+
+                            if (atackers[i].name == 1) {
+                                atackers[i].vy = 0.3
+                            }
+
+                            if ((movement == 0) && (atackers[i].name !== 1)) {
+
+                                atackers[i].vy = 0
+                                atackers[i].vx = 0.1
+
+                                if (atackers[i].x > 750) {
+                                    //: tar fram y värdet av den främsta raden och sparar den i en variabel.
+                                    maxY = 0
+                                    for (var z = 0; z < atackers.length; z++) {
+
+                                        if ((maxY < atackers[z].y) && (atackers[z].name !== 1)) {
+                                            maxY = atackers[z].y
+
+                                        }
+
+                                    }
+
+                                    movement = 1
+                                }
+
+                            } else if ((movement == 1) && (atackers[i].name !== 1)) {
+                                atackers[i].vx = 0
+                                atackers[i].vy = 0.1
+
+                                if (atackers[i].y > (maxY + 30)) {
+                                    movement = 2
+                                }
+
+
+                            } else if ((movement == 2) && (atackers[i].name !== 1)) {
+
+                                atackers[i].vx = -0.1
+                                atackers[i].vy = 0
+                                if (atackers[i].x < 0) {
+
+
+                                    //: tar fram y värdet av den främsta raden och sparar den i en variabel.
+                                    maxY = 0
+                                    for (var z = 0; z < atackers.length; z++) {
+
+                                        if ((maxY < atackers[z].y) && (atackers[z].name !== 1)) {
+                                            maxY = atackers[z].y
+
+                                        }
+
+                                    }
+
+                                    movement = 3
+
+
+                                }
+
+
+                            } else if ((movement == 3) && (atackers[i].name !== 1)) {
+
+                                atackers[i].vx = 0
+                                atackers[i].vy = 0.1
+
+                                if (atackers[i].y > (maxY + 30)) {
+                                    movement = 0
+                                }
+
+
+                            }
+
+
+
+                        }
+
+
+                        //: ritar ut bakterien.
+                        atackers[i].paint(ctx)
+
+                    }
+
+                    //: Ritar ut alla bublor samt alla laserar.
+                    for (i = 0; i < projectiles.length; i++) {
+
+                        projectiles[i].paint(ctx)
+
+                    }
+
+
+                    //: Ritar ut tvålen.
+                    soapArray[0].paint(ctx)
+
+                    //: Ritar ut alla powerups samt att
+                    //:förflyttar powerupsen neråt efter de har spawnat.
+
+                    for (var i = 0; i < powerUps.length; i++) {
+                        //: ritar ut den svarta powerup.
+                        if (powerUps[i].name == "svart") {
+                            //:förflyttar den svarta powerupen neråt efter de har spawnat. om den inte har nått ner till tvålen.
+                            powerUps[i].y += powerUps[i].vy
+
+                            if (powerUps[i].y > 530) {
+                                powerUps[i].vy = 0
+                            }
+                            //: Ritar ut powerupen.
+                            ctx.drawImage(blackPowerupImg, powerUps[i].x, powerUps[i].y, 40, 40)
+                        }
+                        //: ritar ut den röda powerup.
+                        if (powerUps[i].name == "röd") {
+                            //:förflyttar den röda powerupen neråt efter de har spawnat. om den inte har nått ner till tvålen.
+                            powerUps[i].y += powerUps[i].vy
+
+                            if (powerUps[i].y > 530) {
+                                powerUps[i].vy = 0
+                            }
+                            //: Ritar ut powerupen.
+                            ctx.drawImage(redPowerupaImg, powerUps[i].x, powerUps[i].y, 40, 40)
+                        }
+                        //: ritar ut den blå powerup.
+                        if (powerUps[i].name == "blå") {
+                            //:förflyttar den blåa powerupen neråt efter de har spawnat. om den inte har nått ner till tvålen.
+                            powerUps[i].y += powerUps[i].vy
+
+                            if (powerUps[i].y > 530) {
+                                powerUps[i].vy = 0
+                            }
+                            //: Ritar ut powerupen.
+                            ctx.drawImage(bluePowerupImg, powerUps[i].x, powerUps[i].y, 40, 40)
+                        }
+                    }
+
+
+
+                    //: Ritar ut hotbaren i botten av canvaset.
+
+
+
+                    //: Bakgrunden på hotbaren.
+                    ctx.beginPath()
+                    ctx.drawImage(HotbarBakckgroundImg, 0, 600, 800, 200)
+                    ctx.closePath()
+
+
+                    //: ritar ut en linje som visar en separation mellan hotbaren och spelet.
+                    //: Ändrar färgen på strecket beroende på om man har förlorat eller om man fortfarande spelar
+                    if (fate == false) {
+                        activeColor = "rgb(241, 178, 115)"
+                    } else if (fate == undefined) {
+                        activeColor = "#51B0EF"
+                    }
+                    ctx.fillStyle = activeColor
+                    ctx.beginPath()
+                    ctx.fillRect(0, 590, 800, 15)
+                    ctx.closePath()
+
+                    if (powerActive)
+
+                    //: Ritar ut fyrkanter med runda hörn som ska vara som en bakgrund bakterierna i hötbaren.
+                        if (powerActive == "laser") {
+                            ctx.fillStyle = "#54ED4A"
+                        } else {
+                            ctx.fillStyle = activeColor
+                        }
+                    roundRect(ctx, 50, 615, 75, 75, 20, true)
+                    if (powerActive == "snabb") {
+                        ctx.fillStyle = "#54ED4A"
+                    } else {
+                        ctx.fillStyle = activeColor
+                    }
+                    roundRect(ctx, 150, 615, 75, 75, 20, true)
+                    if (powerActive == "triple") {
+                        ctx.fillStyle = "#54ED4A"
+                    } else {
+                        ctx.fillStyle = activeColor
+                    }
+                    roundRect(ctx, 250, 615, 75, 75, 20, true)
+                    if (powerActive == "golden") {
+                        ctx.fillStyle = "#54ED4A"
+                    } else {
+                        ctx.fillStyle = activeColor
+                    }
+                    roundRect(ctx, 350, 615, 75, 75, 20, true)
+
+
+                    //: Ritar ut bakterierna i de små rutorna i hotbaren för att visa vilken powerup som är aktiv.
+                    ctx.drawImage(blueBakteriaImg, 50, 615, 75, 75)
+                    ctx.drawImage(redBakteriaImg, 150, 615, 75, 75)
+                    ctx.drawImage(blackBakteriaImg, 250, 615, 75, 75)
+                        //ctx.drawImage(blackBakteriaImg,350,615,75,75)
+
+
+                    //: Ritar ut poengen
+                    ctx.font = "80px Bleedfont"
+                    ctx.fillText("Score ", 480, 680, 150)
+                    ctx.font = "50px"
+                    ctx.fillText(":", 625, 675, 125)
+                    ctx.fillText(score, 660, 680, 125)
+
+
+                    //: gör en annimation om man vunnit/förlorat.
+                    if (fate !== undefined) {
+
+                        if (ifShutdown == false) {
+                            //: Väntar någon sekund innan annimation körs.
+                            //: genom att skapa en varibel med den exakta tiden.
+                            timeAnnimations = ((hours * 864000) + (minutes * 14400) + (seconds * 240) + miliseconds + 480)
+
+                            //: Stänger av if statementet.
+                            ifShutdown = true
+                        }
+
+
+                        if (timeAnnimations < ((hours * 864000) + (minutes * 14400) + (seconds * 240) + miliseconds)) {
+
+                            //: skapr en trasition effekt.
+                            roundRect(ctx, rectX, rectY, rectWidth, rectHeight, 5, true)
+
+                            if (rectHeight < 800) {
+
+                                rectHeight += 1
+                                rectWidth += 1
+                                rectX += -0.5
+                                rectY += -0.5
+
+
+                            } else {
+
+                                startmotion = 4
+                            }
+
+
+
+
+                        }
+
+                    }
+
+                }
+
+
+                //: Ritar ut mute knappen
+                if ((mute == 0) && (startmotion !== 3)) {
+                    ctx.drawImage(unMuteImg, 760, 660, 40, 40)
+                } else if ((mute == 1) && (startmotion !== 3)) {
+
+                    ctx.drawImage(muteImg, 760, 660, 40, 40)
+                }
+
+
+
+            } //: End of DrawImg
+
+
+            //: paint function som ritar ut alla bublor.
+            Buble.prototype.paint = function (ctx) {
+
+
+                //: Flyllar på bubblan
+                this.x += this.vx
+                this.y += this.vy
+
+
+                //: Ritar ut bubblan
+                ctx.drawImage(soapbubleImg, this.x, this.y, 18, 17)
+
+            }
+
+            //: paint function som ritar ut tvålen
+            soap.prototype.paint = function (ctx) {
+
+                //: Gör så att tvålen alltid stannar innanför cnavaset.
+                if (this.x < -19) {
+                    this.x += 0.5
+                }
+
+                if (this.x > 730) {
+                    this.x += -0.5
+                }
+
+                //: Flåtar på tvålen 
+                this.x += this.vx
+                    //: RÅtar ut tvålen.
+                ctx.drawImage(this.img, this.x, this.y, 100, 100)
+
+
+            }
+
+            //: paint function som ritar ut lasern.
+            Laser.prototype.paint = function (ctx) {
+
+                this.x = soapArray[0].x + 28
+                this.circleX = soapArray[0].x + 45
+
+                //:Ritar ut cirkeln.
+                ctx.beginPath();
+                ctx.arc(this.circleX, soapArray[0].y + 5, arcRadius, 0, 2 * Math.PI)
+                ctx.fillStyle = "rgb(28,107,160)"
+                ctx.fill()
+                ctx.stroke();
+
+                //: Gör så att cirkeln blir större.
+                if (arcRadius < 20) {
+                    arcRadius += 0.1
+                }
+
+
+
+
+                if (reloadtimer < ((hours * 864000) + (minutes * 14400) + (seconds * 240) + miliseconds)) {
+
+                    //: Ritar ut lasern i form av en fyrkant
+                    //: Slutar ritar fyrkaten när den har nått max gränsen.
+                    if (this.y > -350) {
+                        ctx.fillRect((this.x + this.laserOffset), this.y, this.width, this.heigt)
+                    }
+
+                    //: Gör så att lasern rör sig uppåt och stannar vid en viss längd.
+                    if (this.y > -350) {
+
+                        this.heigt += 4
+                        this.y += -4
+
+                    } else {
+
+
+
+                        //: Gör slut annimatione. 
+                        if (arcRadius > 0) {
+                            arcRadius += -0.1
+                        } else {
+
+                            //: tar bort lasern när den har nått sin max längd.
+                            //: Samt gör en reset så att alla annimationer går till sina 0 punkter.
+                            projectiles.splice((temp[77]), 1)
+                            powerActive = "regular"
+                            arcRadius = 0
+
+                        }
+
+                    }
+
+                    //: Gör effekten i början av annimationen , att lasern kommer från ingenstans.
+                    if (this.laserOffset > 0) {
+
+                        this.laserOffset += -0.2
+
+                    }
+
+                    //: GÖr så att laser kommer fram från tomma intet.
+                    if (this.width < 33) {
+                        this.width += 0.4
+                    }
+
+
+
+
+
+                }
+
+            }
+
+            //: paint function som ritar ut alla backterier..
+            Backteria.prototype.paint = function (ctx) {
+
+                //: Uppdaterar positionen av bakterien
+                this.x += this.vx
+                this.y += this.vy
+
+                //: Målar ut bakterierna. målar även ut special färgade baktterier.
+                if ((this.name !== 12) && (this.name !== 5) && (this.name !== 20)) {
+                    //: Målar ut den vanligt färgade bakterien
+                    ctx.drawImage(dirtyBakteriaImg, this.x, this.y, 50, 50)
+                } else if (this.name == 12) {
+                    //: Målar ut den röd färgade bakterien
+                    ctx.drawImage(redBakteriaImg, this.x, this.y, 50, 50)
+                } else if (this.name == 5) {
+                    //: Målar ut den svart färgade bakterien
+                    ctx.drawImage(blackBakteriaImg, this.x, this.y, 50, 50)
+                } else if (this.name == 20) {
+                    //: Målar ut den ljusblå färgade bakterien
+                    ctx.drawImage(blueBakteriaImg, this.x, this.y, 50, 50)
+                }
+
+
+
+            }
+
+            var speed = 0
+
+            //: En funktion som kollar om något har kolliderat.
+            function collision() {
+                //: kollar om någoting av bulorna och bakterierna har kolliderat.
+                //: Tar även bort bakteriet som har kolliderat.
+                for (var i = 0; i < projectiles.length; i++) {
+                    for (var z = 0;
+                        (z < atackers.length) && (i < projectiles.length); z++) {
+                        if (projectiles[i].x > (atackers[z].x - 14) &&
+                            (projectiles[i].x < (atackers[z].x + 43)) &&
+                            (projectiles[i].y > (atackers[z].y - 9)) &&
+                            (projectiles[i].y < (atackers[z].y + 42)) && (projectiles.length !== 0)) {
+
+                            //: Om en powerup bakterie blir träffad, sparas kodrinaterna i en temporär array. samt att den tenporära arrays information blir bortagen
+                            if (atackers[z].name == 12 || atackers[z].name == 5 || atackers[z].name == 20) {
+
+                                //: sparar vilken powerup som blivit träfad också i en varibel.
+                                if (atackers[z].name == 5) {
+                                    powerName = "svart"
+
+                                }
+                                if (atackers[z].name == 12) {
+                                    powerName = "röd"
+                                }
+                                if (atackers[z].name == 20) {
+                                    powerName = "blå"
+                                }
+                                //: startar functionen som skapar powerups.
+                                powerUp(atackers[z].x, atackers[z].y, powerName);
+
+                            }
+
+                            //: lägger till olika många peong beroende på om vilka bakterier man träffar.
+                            if (atackers[z].name == 12 || atackers[z].name == 5 || atackers[z].name == 20) {
+                                pointAdder(10);
+
+                            } else {
+                                pointAdder(5);
+                            }
+
+
+                            //: Tar bort bakteriet som har blivit kolliderat.
+                            atackers.splice(z, 1)
+                                //: tar bort bubblan som träffat bakterien
+                                //: tar inte bort projektilen om det är en laser.
+                            if ((atackers[z] !== undefined) && (projectiles[i].name !== "Annihilater")) {
+                                projectiles.splice(i, 1)
+                            }
+
+
+                        }
+
+                        //: Hit-box för lasern.
+                        //: kollar om projektilen inte är en bubla.
+                        if ((projectiles[i] !== undefined) && (atackers[z] !== undefined) && (projectiles.length !== 0)) {
+
+                            if ((projectiles[i].x + projectiles[i].width > (atackers[z].x)) &&
+                                (projectiles[i].x < (atackers[z].x + (50 - (50 * atackers[z].backteriaOffsetX)))) &&
+                                ((projectiles[i].y) < (atackers[z].y + (50 * atackers[z].backteriaOffsetY))) &&
+                                (projectiles[i].y + projectiles[i].heigt > (atackers[z].y + (50 - (50 * atackers[z].backteriaOffsetY))))) {
+
+                                //: Om en powerup bakterie blir träffad, sparas kodrinaterna i en temporär array. samt att den tenporära arrays information blir bortagen
+                                if (atackers[z].name == 12 || atackers[z].name == 5 || atackers[z].name == 20) {
+
+                                    //: sparar vilken powerup som blivit träfad också i en varibel.
+                                    if (atackers[z].name == 5) {
+                                        powerName = "svart"
+
+                                    }
+                                    if (atackers[z].name == 12) {
+                                        powerName = "röd"
+                                    }
+                                    if (atackers[z].name == 20) {
+                                        powerName = "blå"
+                                    }
+                                    //: startar functionen som skapar powerups.
+                                    powerUp(atackers[z].x, atackers[z].y, powerName);
+
+                                }
+
+                                //: lägger till olika många peong beroende på om vilka bakterier man träffar.
+                                if (atackers[z].name == 12 || atackers[z].name == 5 || atackers[z].name == 20) {
+                                    pointAdder(10);
+
+                                } else {
+                                    pointAdder(5);
+                                }
+
+                                //: Tar bort bakteriet som har blivit kolliderat.
+                                atackers.splice(z, 1)
+
+                            }
+
+                        }
+
+
+                    }
+
+                }
+
+                //: Skannar igenom arrayn för powerups och kollar om någon av dem har kolliderat med tvålen
+                //: Om detta sker bestäms en power up sat att powerupen försvinner.
+                //: inget av detta händer om  inte powerupen står på samma nivå som tvålen.
+                for (var z = 0; z < powerUps.length; z++) {
+                    if ((soapArray[0].x < (powerUps[z].x + 19)) && (soapArray[0].x > (powerUps[z].x - 70)) && (powerUps[z].y > 530)) {
+
+                        if (powerUps[z].name == "svart") {
+                            powerActive = "triple"
+                            powerUps.splice(z, 1)
+                        } else if (powerUps[z].name == "röd") {
+                            powerActive = "snabb"
+                            powerUps.splice(z, 1)
+                        } else if (powerUps[z].name == "blå") {
+                            powerActive = "laser"
+                            powerUps.splice(z, 1)
+                        } else if (powerUps[z].name == "guld") {
+                            powerActive = 4
+                            powerUps.splice(z, 1)
+                        }
+                    }
+
+
+                }
+
+
+
+                //:startar en funtion som kollar om alla bakterier är döda och där med har vunnit spelet. samtom bakterierna har nått ner till vattnet och därmed förlorat.
+                winOrLoseDetection()
+
+            }
+
+
+            //: fate är en variabel som visar om man har vunnit eller förlorat.
+            //: true betyder att man har vunnit
+            //: false betyder att man har förlorat.
+            var fate = undefined
+
+            function winOrLoseDetection() {
+
+
+                //: kollar om alla bakterier har blivit borttagna.          
+                if ((atackers.length == 0) && (startmotion == 0)) {
+                    fate = true
+                    BackgroundMusic.pause()
+                }
+
+                for (var i = 0; i < atackers.length; i++) {
+                    //: kollar om någon bakterie har gått ner vid vattnet.
+                    //: 480 är y värdet där vattnet börjar ritas ut. 
+                    //: 50 är längden på bakterien.
+                    //: 7.5 är så långt det är ner till slutet av bilden från bakterien i bilden.
+                    if (atackers[i].y > (480 - (50 - 7.5))) {
+                        fate = false
+                        BackgroundMusic.pause();
+                        loseMuscic.play();
+                    }
+                }
+
+
+            }
+
+            //: En funktion bytter bakgrunden på canvaset allt eftersom spelet går frammåt.
+            function backgroundChanger() {
+
+                if (startmotion == 2) {
+                    document.getElementById("myCanvas").style.backgroundImage = "url(Bilder/underwater.jpg)"
+                }
+
+                if (startmotion == 1) {
+                    document.getElementById("myCanvas").style.backgroundImage = "url(Bilder/wallblue.jpg)"
+                }
+
+            }
+
+
+            //: Gör så att alla bublor är identifierbara , genom att lägga till ett på namnet.
+            var bublename = 1
+
+            //: Gör så att man inte kan skjuta bublor kostant.
+            //: lägger till en reload function.
+            //: Gör så att man inte kan skjuta på 1 sejund efter man har skjutit-
+            var reloadtimer = 0
+
+            //: håller koll på  hur många gånger som en poweup har änväds i "tripple" i [0]
+            //: sparar hur lång tid som snabb har använts i [1]
+            var powercounter = [0, 0]
+
+            //: en variabel som bestämmer hur lång tid mellan varje skott.
+            var timeDelay = 480
+
+            //: Stopar en ett if-staatment efter den har aktiveratd
+            var stopDetection = false
+                //: En funktion som kollar om någon har tryckt ner en knapp.
+            function keyDown(ev) {
+
+
+
+                //: Gör så att om man trycker escape så kommer man till menyn
+                if (startmotion == 6 || startmotion == 5 || startmotion == 2 || startmotion == 1 || startmotion == 0) {
+                    //: Gör så att man kommer tillbacka till menyn om man teycker på "esc"
+                    if (ev.keyCode == 27) {
+
+                        startmotion = 2
+                        BackgroundMusic.pause();
+
+                    }
+
+                    //: Stänger av ljudet om man trycker ner knappen "M"
+                    if (ev.keyCode == 77) {
+
+                        if (mute == 0) {
+                            mute = 1
+                        } else {
+
+                            mute = 0
+                        }
+
+
+                    }
+
+                }
+
+                if (startmotion == 5) {
+
+                    if (ev.keyCode == 65) {
+                        if (instructionsSlide > 1) {
+                            instructionsSlide += -1
+                        }
+
+                    }
+
+                    if (ev.keyCode == 68) {
+
+                        if (instructionsSlide < 5) {
+                            instructionsSlide += 1
+                        }
+                    }
+
+                }
+
+                if ((startmotion == 4) && (ev.keyCode == 13)) {
+                    //: Startar om spelet
+                    alpha = 0
+                    alpha1 = 0
+                    alpha2 = 0
+                    alpha3 = 0
+                    alpha4 = 0
+                    blink = 1
+                    menycolor = 0
+                    ifShutdown = 0
+                    rectX = 400
+                    rectY = 400
+                    rectWidth = 0
+                    rectHeight = 0
+                    fateMeny = 0
+                    fate = undefined
+
+
+                    //: tar bort alla bakterier och projektiler.
+                    atackers.splice(0, atackers.length)
+                    projectiles.splice(0, projectiles.length)
+
+                    names = 0
+
+
+
+                    startmotion = 2
+                }
+
+                //: ett if-staatment som kollar om någon har tryckt ner en knapp
+                if ((startmotion == 3) && (isNumber(ev.keyCode) == true) && (stopDetection == false)) {
+
+                    //: startar vido3 samt nollställer några varibler.
+                    playvideo = true
+                    video3.play()
+                    alpha = 0
+                    stopDetection = true
+                }
+
+                //:  menyn.
+                if (startmotion == 2) {
+
+
+                    if ((ev.keyCode == 87) && (menycolor > 1)) {
+                        menycolor += -1
+                    } else if ((ev.keyCode == 83) && (menycolor < 3)) {
+                        menycolor += 1
+                    }
+
+                    //: Om enter tangeten trycks ner, kollas färgen på menyn upp och hoppar till en specifik punkt i spelt.
+                    if (ev.keyCode == 13) {
+                        //: Om Start är markerat 
+                        if (menycolor == 1) {
+                            startmotion = 1
+                            MenyMusic.pause()
+                            if (mute !== 1) {
+                                BackgroundMusic.play()
+                            }
+
+                        }
+
+                        //: Om "Intructions" är markerat
+                        if (menycolor == 2) {
+                            startmotion = 5
+                            MenyMusic.pause()
+
+                        }
+
+                        //: Om "Setup" är markerat
+                        if (menycolor == 3) {
+                            startmotion = 6
+                            MenyMusic.pause()
+
+                        }
+
+
+                    }
+
+
+                }
+
+
+                if (startmotion == 0) {
+
+                    //: Gör så att det skaps en ny bubla när man trycker ner space
+                    if ((ev.keyCode == 32) && (reloadtimer < ((hours * 864000) + (minutes * 14400) + (seconds * 240) + miliseconds))) {
+
+                        //: kollar om en powerUp är aktiv
+                        if (powerActive == "regular") {
+                            //: Skapr en ny bubla, och lägger den i en array så att den blir lätt tillgänglig
+                            projectiles.push(new Buble(bublename, soapArray[0].x + 35, soapArray[0].y + 25, -0.3, 0, 0))
+
+                            //: höjer namnet med en så att nästa buble inte har samma namn som förra.
+                            bublename = bublename + 1
+
+
+
+                        } else {
+
+                            //: aktiverar powerup "tripple" om den är aktiv 
+                            if (powerActive == "triple") {
+
+                                //: Skapr tre ny bublor som flyger åt varsitt håll. 
+                                //:samt  lägger den i en array så att den blir lätt tillgänglig
+                                projectiles.push(new Buble(bublename, soapArray[0].x + 35, soapArray[0].y + 25, -0.3, 0, 0))
+                                    //: höjer namnet med en varje gång så att nästa buble inte har samma namn som förra.
+                                bublename = bublename + 1
+                                    //: skapr ny bubla ( den vänstra)
+                                projectiles.push(new Buble(bublename, soapArray[0].x + 35, soapArray[0].y + 25, -0.3, -0.1, 0))
+                                    //: höjer namnet 
+                                bublename = bublename + 1
+                                    //: skapr ny bubla ( Den högra )
+                                projectiles.push(new Buble(bublename, soapArray[0].x + 35, soapArray[0].y + 25, -0.3, 0.1, 0))
+                                    //: höjer namnet 
+                                bublename = bublename + 1
+                                    //: lägger till en på countern som håller koll på hur många gånger man har skjuttit med poweupen, om den inte har sljutits 3 gånger
+                                if (powercounter[0] !== 2) {
+                                    powercounter[0] += 1
+                                } else {
+                                    powerActive = "regular"
+                                }
+
+
+
+                            } else if (powerActive == "snabb") {
+
+                                timeDelay = 120
+                                    //: Skapr tre ny bublor som flyger åt varsitt håll. 
+                                    //:samt  lägger den i en array så att den blir lätt tillgänglig
+                                projectiles.push(new Buble(bublename, soapArray[0].x + 35, soapArray[0].y + 25, -0.3, 0, 0))
+                                    //: höjer namnet med en varje gång så att nästa buble inte har samma namn som förra.
+                                bublename = bublename + 1
+
+                                if (powercounter[1] !== 10) {
+                                    powercounter[1] += 1
+                                } else {
+                                    powerActive = "regular"
+                                    timeDelay = 480
+                                }
+
+
+                            } else if (powerActive == "laser") {
+                                //: spelar upp laser soundeffekten.
+                                laserSound.play();
+
+                                //: stänger av så att man inte kan skjuta medans man laddar lasern.
+                                powerActive = "stasis"
+
+                                //: skapar en ny laser.
+                                projectiles.push(new Laser("Annihilater", soapArray[0].x, soapArray[0].y + 15, 0, 0, 16.5, 0))
+                                    //: sparar positionen av lasern i en temporär array.
+                                temp[77] = projectiles.length - 1
+
+
+                            } else if (powerActive == "golden") {
+
+
+
+
+                            }
+                        }
+
+                        //: lägger in tiden i en variabel så att man bara kan skjuta efter det ha gått två sekund
+                        reloadtimer = ((hours * 864000) + (minutes * 14400) + (seconds * 240) + miliseconds + timeDelay)
+
+                    }
+
+                }
+
+                //: kontrolera tålen.
+                if (startmotion == 1 || startmotion == 0) {
+
+                    //: vänsterknappen
+                    if (ev.keyCode == 65) {
+                        soapArray[0].vx = -0.5
+                    }
+                    //: Högerknappen
+                    if (ev.keyCode == 68) {
+                        soapArray[0].vx = 0.5
+                    }
+                }
+
+
+            }
+
+            //: En funktion som kollar om någon har släppt en knapp.
+            function keyUp(ev) {
+
+
+                //: stoppar  tålen när man inte trycker på en knapp.
+                //: Högerknappen
+                if (ev.keyCode == 65) {
+                    soapArray[0].vx = 0
+                }
+                //: Högerknappen
+                if (ev.keyCode == 68) {
+                    soapArray[0].vx = 0
+                }
+
+            }
+
+            //: En event-lyssnare som kollar om någon har tryckt ner musen över kanvasat
+            myCanvas.addEventListener("click", clickPosition, false);
+            myCanvas.addEventListener("mousemove", hooverPosition, false);
+
+            //: Tar fram x och y kordinaterna från canvaset och kollar om de är innanför mute-knappen.
+            function clickPosition(event) {
+
+                //: Tar fram x och y kordinaterna från canvaset
+                var x = event.x;
+                var y = event.y;
+
+                var canvas = document.getElementById("myCanvas");
+
+                x -= canvas.offsetLeft;
+                y -= canvas.offsetTop;
+
+                //: Kollar om x och y kordinaterna är innanför mute-knappen.
+                if ((startmotion !== 3) && (x > 760) && (y > 660)) {
+
+                    if (mute == 0) {
+                        mute = 1
+                    } else {
+
+                        mute = 0
+                    }
+                }
+
+                //: kollar om  musen är inannför någon av menyn knapparna
+                if ((x > 254) && (x < 537) && (y > 230) && (y < 308)) {
+                    startmotion = 1
+                    MenyMusic.pause()
+                    if (mute !== 1) {
+                        BackgroundMusic.play()
+                    }
+                } else if ((x > 205) && (x < 582) && (y > 407) && (y < 462)) {
+
+                    startmotion = 5
+                    MenyMusic.pause()
+
+                } else if ((x > 244) && (x < 525) && (y > 541) && (y < 603)) {
+
+                    startmotion = 6
+                }
+
+                //: Kollar om musen klickar innaför ett specifikt område
+                if ((x > 271) && (x < 470) && (y > 37) && (y < 236)) {
+
+                    map = 2
+                } else if ((x > 40) && (x < 240) && (y > 37) && (y < 236)) {
+
+                    map = 1
+                }
+
+            }
+
+            //: Ändrar muspekaren beroende på om den är över en viss position.
+            function hooverPosition(event) {
+                //: Tar fram x och y kordinaterna från canvaset
+                var x = event.x;
+                var y = event.y;
+
+                var canvas = document.getElementById("myCanvas");
+
+                x -= canvas.offsetLeft;
+                y -= canvas.offsetTop;
+
+
+
+
+                //: left 271 , 40 
+                //: right 470 , 240 
+                //: upp 37 , 37
+                //: Down 236, 236
+
+
+                //: Menyn
+                //: Kollar om musen är innaför ett specifikt område       
+                if ((x > 254) && (x < 537) && (y > 230) && (y < 308)) {
+
+                    menycolor = 1
+                    document.body.style.cursor = "pointer"
+
+                } else if ((x > 205) && (x < 582) && (y > 407) && (y < 462)) {
+
+                    menycolor = 2
+                    document.body.style.cursor = "pointer"
+
+                } else if ((x > 244) && (x < 525) && (y > 541) && (y < 603)) {
+
+                    menycolor = 3
+                    document.body.style.cursor = "pointer"
+
+                    //: Ändrar muspekaren om den är över mute - knappen
+                } else if ((startmotion !== 3) && (x > 760) && (y > 660)) {
+
+                    document.body.style.cursor = "pointer"
+
+                } else {
+
+                    menycolor = 0
+                    document.body.style.cursor = "auto"
+                }
+
+                //: inställningarna
+                //: Kollar om musen är innaför ett specifikt område  
+                if ((x > 271) && (x < 470) && (y > 37) && (y < 236)) {
+
+                    setupColor = 2
+                    descriptionSetting = 2
+
+                } else if ((x > 40) && (x < 240) && (y > 37) && (y < 236)) {
+
+                    setupColor = 1
+                    descriptionSetting = 1
+                } else {
+
+                    setupColor = 0
+                    descriptionSetting = 0
+
+                }
+
+
+            }
+
+
+
+
+            var score = 0,
+                tempscore = 0,
+                addingTime = 0;
+
+            function pointAdder(points) {
+
+                tempscore += points
+
+                if ((tempscore !== 0) && (addingTime < ((hours * 864000) + (minutes * 14400) + (seconds * 240) + miliseconds))) {
+
+                    score += 1
+                    tempscore += (-1)
+
+                    addingTime = ((hours * 864000) + (minutes * 14400) + (seconds * 240) + miliseconds + 10)
+                }
+            }
+
+            //: Tids variabler
+            var miliseconds = 0,
+                seconds = 0,
+                minutes = 0,
+                hours = 0;
+
+            // : Gör så att tiden ändras, allt efter som.(En klocka.)
+            function heartbeat() {
+                //: Visar tiden i consolen.
+                //console.log(hours + ":" + minutes + ":" + seconds + ":" + miliseconds)
+
+                miliseconds = miliseconds + 1
+
+                if (miliseconds > 240) {
+                    miliseconds = 0
+                    seconds = seconds + 1
+                } else if (seconds > 60) {
+                    seconds = 0
+                    minutes = minutes + 1
+                } else if (minutes > 60) {
+                    minutes = 0
+                    hours = hours + 1
+
+                }
+
+            }
+        </script>
+</body>
+
+</html>

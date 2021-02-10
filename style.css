@@ -1,0 +1,21 @@
+
+@font-face {
+    font-family: 'Futurefont';
+    src: url("fonts/spaceship.ttf");
+}
+
+@font-face {
+    font-family: 'Bleedfont';
+    src: url("fonts/other.otf");
+}
+
+@font-face {
+    font-family: 'Waterfont';
+    src: url("../Duscha/fonts/Waters.ttf");
+}
+
+@font-face {
+    font-family: 'Numbers';
+    src: url("fonts/digits.ttf");
+}
+ 

@@ -2,4 +2,5 @@ hello
 
 function print(){
   console.log("log")
+  console.log("log2")
 }

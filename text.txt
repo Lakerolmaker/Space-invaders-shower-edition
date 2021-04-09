@@ -2,5 +2,5 @@ hello
 
 function print(){
   console.log("log")
-  console.log("log1")
+  console.log("log10")
 }

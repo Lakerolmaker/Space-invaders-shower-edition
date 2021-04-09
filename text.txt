@@ -2,9 +2,5 @@ hello
 
 function print(){
   console.log("log")
-<<<<<<< Updated upstream
-  console.log("log3")
-=======
-  console.log("log5")
->>>>>>> Stashed changes
+  console.log("log1")
 }
